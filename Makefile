@@ -11,8 +11,9 @@
 
 .PHONY: all install clean
 
-CFLAGS += --sysroot=$(SYSROOT) -isystem =/usr/include -g -Wall -Wextra -Werror
-LDCFLAGS += --sysroot=$(SYSROOT) -isystem =/usr/include -L=/lib -L=/usr/lib -g
+# Below values would be passed / setup in OE/Yocto
+#CFLAGS += --sysroot=$(SYSROOT) -isystem =/usr/include -g -Wall -Wextra -Werror
+#LDCFLAGS += --sysroot=$(SYSROOT) -isystem =/usr/include -L=/lib -L=/usr/lib -g
 
 all: test_n2038 test_y2038
 
