@@ -11,33 +11,28 @@
 
 .PHONY: all install clean
 
-# Below values would be passed / setup in OE/Yocto
-#CFLAGS += --sysroot=$(SYSROOT) -isystem =/usr/include -g -Wall -Wextra -Werror
-#LDCFLAGS += --sysroot=$(SYSROOT) -isystem =/usr/include -L=/lib -L=/usr/lib -g
-
 all: test_n2038 test_y2038
-
-test_y2038: $(patsubst %.c,%.64.o,$(wildcard *.c)) 
+test_y2038: $(patsubst %.c,%.64.o,$(wildcard *.c))
 	@echo "LD64  $^"
-	@$(CC) $(LDCFLAGS) -o test_y2038 $^ -lrt
+	$(CC) $(LDFLAGS) -o test_y2038 $^ -lrt
 
 test_n2038: $(patsubst %.c,%.32.o,$(wildcard *.c))
 	@echo "LD32  $^"
-	@$(CC) $(LDCFLAGS) -o test_n2038 $^ -lrt
+	$(CC) $(LDFLAGS) -o test_n2038 $^ -lrt
 
 %.64.o: %.c %.64.d
 	@echo "CC64  $<"
 	@$(CC) $(CFLAGS) -c -o $@ -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 $<
-	
+
 %.64.d: %.c
-	@$(CC) $(LDCFLAGS) -M -o $@ -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 $<
+	@$(CC) $(CFLAGS) -M -o $@ -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 $<
 %.32.o: %.c %.32.d
 	@echo "CC32  $<"
 	@$(CC) $(CFLAGS) -c -o $@ -D_FILE_OFFSET_BITS=64 $<
 
 %.32.d: %.c
-	@$(CC) $(LDCFLAGS) -M -o $@ $<
-	
+	@$(CC) $(CFLAGS) -M -o $@ $<
+
 install: all
 	install -m 755 test_n2038 $(INSTALL_DIR)
 	install -m 755 test_y2038 $(INSTALL_DIR)
