@@ -123,9 +123,7 @@ void test_mq_timedsend(void)
     return;
   }
   test_success();
-#if 0 /* SKIP this test as currently if causes sandbox hang */
   test_mq_timedsend_onqueue(q);
-#endif
   test_begin("Close the message queue");
   int cq = mq_close(q);
   if (cq)
