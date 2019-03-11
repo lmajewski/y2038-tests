@@ -50,7 +50,7 @@ void test_mq_timedsend_onqueue(mqd_t q)
 // Only test this part if we can set the time beyond Y2038
 // i.e. if our time_t is 64-bit
 
-#if defined(__USE_TIME_BITS_64) && __USE_TIME_BITS_64 == 1
+#if defined(__USE_TIME_BITS64) && __USE_TIME_BITS64 == 1
 
   test_begin("Get current time");
   time_t t0 = time(NULL);
