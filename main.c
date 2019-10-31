@@ -43,7 +43,7 @@
 #endif
 
 int main(int argc __attribute__((unused)), char*argv[] __attribute__((unused)))
-{ 
+{
   int time_t_size = sizeof(time_t);
   if (time_t_size != _TIME_T_SIZE)
   {
@@ -52,7 +52,7 @@ int main(int argc __attribute__((unused)), char*argv[] __attribute__((unused)))
   }
   int err = print_kernel_version();
   if (!err) err = print_glibc_version();
-  
+
   if (err) return 1;
 
   printf("\n");
@@ -93,5 +93,3 @@ int main(int argc __attribute__((unused)), char*argv[] __attribute__((unused)))
 
   return 0;
 }
-
-
