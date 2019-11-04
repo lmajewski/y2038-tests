@@ -24,7 +24,7 @@
 #include "test_fstat.h"
 #include "test_lstat.h"
 #include "test_fstatat.h"
-#include "test_time_stime.h"
+#include "test_time.h"
 #include "test_gettimeofday_settimeofday.h"
 #include "test_mq_timedreceive.h"
 #include "test_mq_timedsend.h"
@@ -78,7 +78,7 @@ int main(int argc __attribute__((unused)), char*argv[] __attribute__((unused)))
   test_run(test_fstat);
   test_run(test_lstat);
   test_run(test_fstatat);
-  test_run(test_time_stime);
+  test_run(test_time_);
   test_run(test_gettimeofday_settimeofday);
   test_run(test_mq_timedreceive);
   test_run(test_mq_timedsend);

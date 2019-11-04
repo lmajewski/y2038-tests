@@ -19,17 +19,23 @@ static void test_time(const time_t sec)
     test_success();
 }
 
-static int test_stime(const time_t sec)
+static int test_clock_settime(const time_t sec)
 {
-  int result = stime(&sec);
+  struct timespec ts;
+  int result;
+
+  ts.tv_sec = sec;
+  ts.tv_nsec = 0;
+
+  result = clock_settime(CLOCK_MONOTONIC, &ts);
   if (result)
-    test_failure(1, "stime returned %d", result);
+    test_failure(1, "clock_settime returned %d", result);
   else
-    test_success();    
+    test_success();
   return result;
 }
 
-void test_time_stime(void)
+void test_time_(void)
 {
   time_t t0, t;
 
@@ -40,16 +46,19 @@ void test_time_stime(void)
   test_begin("Set time to Y2038 minus 60 seconds");
   t = 0x7FFFFFFF;
   t -= 59;
-  int result = test_stime(t);
+  int result = test_clock_settime(t);
   if (result == 0) test_time(t);
 
   test_begin("Set time to Y2038 plus 60 seconds");
   t = 0x7FFFFFFF;
   t += 61;
-  result = test_stime(t);
+  result = test_clock_settime(t);
   if (result == 0) test_time(t);
-  
+
   test_begin("Restore time");
-  result = stime(&t0);
-  if (result) test_failure(1, "stime returned %d", result); else test_success();
+  result = test_clock_settime(t0);
+  if (result)
+    test_failure(1, "clock_settime returned %d", result);
+  else
+    test_success();
 }
