@@ -17,6 +17,7 @@
 #include "test_clock_nanosleep.h"
 #include "test_timespec_get.h"
 #include "test_futimens.h"
+#include "test_futimes.h"
 #include "test_utimensat.h"
 #include "test_timer_gettime_settime.h"
 #include "test_timerfd_gettime_settime.h"
@@ -70,6 +71,7 @@ int main(int argc __attribute__((unused)), char*argv[] __attribute__((unused)))
   test_run(test_clock_nanosleep);
   test_run(test_timespec_get);
   test_run(test_futimens);
+  test_run(test_futimes);
   test_run(test_utimensat);
   test_run(test_ppoll);
   test_run(test_timer_gettime_settime);
