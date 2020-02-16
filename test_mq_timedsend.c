@@ -62,11 +62,11 @@ void test_mq_timedsend_onqueue(mqd_t q)
   test_success();
 
   test_begin("Set current time at Y2038+1s");
-  time_t t = 0x80000001;
-  result = stime(&t);
+  struct timespec t = { 0x80000001, 0};
+  result = clock_settime(CLOCK_REALTIME, &t);
   if (result)
   {
-    test_failure(1, "stime returned %d", result);
+    test_failure(1, "clock_settime returned %d", result);
     return;
   }
   test_success();
@@ -103,9 +103,13 @@ void test_mq_timedsend_onqueue(mqd_t q)
   }
 
   test_begin("Restore current time");
-  result = stime(&t0);
+  struct timespec ts0;
+  ts0.tv_sec = t0;
+  ts0.tv_nsec = 0;
+
+  result = clock_settime(CLOCK_REALTIME, &ts0);
   if (result)
-    test_failure(1, "stime returned %d", result);
+    test_failure(1, "clock_settime returned %d", result);
   else 
     test_success();
 
