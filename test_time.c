@@ -27,7 +27,7 @@ static int test_clock_settime(const time_t sec)
   ts.tv_sec = sec;
   ts.tv_nsec = 0;
 
-  result = clock_settime(CLOCK_MONOTONIC, &ts);
+  result = clock_settime(CLOCK_REALTIME, &ts);
   if (result)
     test_failure(1, "clock_settime returned %d", result);
   else
