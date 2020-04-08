@@ -22,10 +22,10 @@ test_n2038: $(patsubst %.c,%.32.o,$(wildcard *.c))
 
 %.64.o: %.c %.64.d
 	@echo "CC64  $<"
-	@$(CC) $(CFLAGS) -c -o $@ -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 $<
+	@$(CC) $(CFLAGS) -c -save-temps -o $@ -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 $<
 
 %.64.d: %.c
-	@$(CC) $(CFLAGS) -M -o $@ -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 $<
+	@$(CC) $(CFLAGS) -M -save-temps -o $@ -D_TIME_BITS=64 -D_FILE_OFFSET_BITS=64 $<
 %.32.o: %.c %.32.d
 	@echo "CC32  $<"
 	@$(CC) $(CFLAGS) -c -o $@ -D_FILE_OFFSET_BITS=64 $<
@@ -38,4 +38,4 @@ install: all
 	install -m 755 test_y2038 $(INSTALL_DIR)
 
 clean:
-	rm -f test_[ny]2038 *.o *.d
+	rm -f test_[ny]2038 *.o *.d *.i *.s
