@@ -36,6 +36,6 @@ void test_recvmmsg(void)
     test_failure(1, "recvmmsg with NULL timeout returned -1");
   }
 
-  close (socfd);	
+  close (socfd);
   test_success();
 }
