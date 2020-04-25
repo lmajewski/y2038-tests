@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <sys/timex.h>
 
 #include "tests.h"
 
@@ -23,6 +24,32 @@ static void test_clock_gettime(struct timespec *tv, time_t sec)
     test_failure(1, "clock_gettime returned %d", result);
   else if (tv->tv_sec != sec)
     test_failure(0, "clock_gettime returned %lld instead of %lld", (long long) (tv->tv_sec), (long long) sec);
+  else
+    test_success();
+}
+
+static void test_ntp_gettime(time_t sec)
+{
+	struct ntptimeval ntv;
+  int result = ntp_gettime(&ntv);
+  if (result == -1)
+    test_failure(1, "ntp_gettime returned %d", result);
+  else if (ntv.time.tv_sec != sec)
+    test_failure(0, "ntp_gettime returned %lld instead of %lld",
+                 (long long) (ntv.time.tv_sec), (long long) sec);
+  else
+    test_success();
+}
+
+static void test_ntp_gettimex(time_t sec)
+{
+	struct ntptimeval ntv;
+  int result = ntp_gettimex(&ntv);
+  if (result == -1)
+    test_failure(1, "ntp_gettimex returned %d", result);
+  else if (ntv.time.tv_sec != sec)
+    test_failure(0, "ntp_gettimex returned %lld instead of %lld",
+                 (long long) (ntv.time.tv_sec), (long long) sec);
   else
     test_success();
 }
@@ -60,7 +87,13 @@ void test_clock_gettime_settime(void)
   if (result == 0)
   {
     test_begin("Get clock real time");
-	test_clock_gettime(&tv, tv.tv_sec);
+    test_clock_gettime(&tv, tv.tv_sec);
+
+    test_begin("Get clock real time via NTP (ntp_gettime)");
+    test_ntp_gettime(tv.tv_sec);
+
+    test_begin("Get clock real time via NTP (ntp_gettimex)");
+    test_ntp_gettimex(tv.tv_sec);
   }
 
   test_begin("Set clock real time to Y2038 plus 60 seconds");
@@ -72,7 +105,13 @@ void test_clock_gettime_settime(void)
   if (result == 0)
   {
     test_begin("Get clock real time");
-	test_clock_gettime(&tv, tv.tv_sec);
+    test_clock_gettime(&tv, tv.tv_sec);
+
+    test_begin("Get clock real time via NTP (ntp_gettime)");
+    test_ntp_gettime(tv.tv_sec);
+
+    test_begin("Get clock real time via NTP (ntp_gettimex)");
+    test_ntp_gettimex(tv.tv_sec);
   }
 
   test_begin("Restore clock real time");
