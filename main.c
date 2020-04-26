@@ -34,6 +34,7 @@
 #include "test_nanosleep.h"
 #include "test_adjtime.h"
 #include "test_adjtimex.h"
+#include "test_clock_adjtime.h"
 #include "test_utime.h"
 #include "test_set_getitimer.h"
 #include "test_ppoll.h"
@@ -91,6 +92,7 @@ int main(int argc __attribute__((unused)), char*argv[] __attribute__((unused)))
   test_run(test_nanosleep);
   test_run(test_adjtime);
   test_run(test_adjtimex);
+  test_run(test_clock_adjtime);
   test_run(test_utime);
   test_run(test_recvmmsg);
   test_run(test_set_getitimer);
