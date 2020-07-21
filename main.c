@@ -39,6 +39,7 @@
 #include "test_set_getitimer.h"
 #include "test_ppoll.h"
 #include "test_recvmmsg.h"
+#include "test_pthread_timedjoin_np.h"
 
 # if defined(_TIME_BITS) && _TIME_BITS==64
  #define _TIME_T_SIZE 8
@@ -93,6 +94,7 @@ int main(int argc __attribute__((unused)), char*argv[] __attribute__((unused)))
   test_run(test_adjtime);
   test_run(test_adjtimex);
   test_run(test_clock_adjtime);
+  test_run(test_pthread_timedjoin_np);
   test_run(test_utime);
   test_run(test_recvmmsg);
   test_run(test_set_getitimer);
