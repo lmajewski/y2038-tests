@@ -45,7 +45,7 @@ static void *pt_fn(void *param)
 	pthread_exit(NULL);
 }
 
-void __test_cond(int tsec_inc, enum tst_type ttype)
+static void __test_cond(int tsec_inc, enum tst_type ttype)
 {
 	struct tst_struct tstr;
   pthread_t t0;
